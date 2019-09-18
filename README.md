@@ -7,20 +7,22 @@ Faculty of Information Technology, KMITL
     แล้วจะแนะนำสถานที่ที่ผู้ใช้อาจจะสนใจเดินทางไป
   
 ## Service Architecture :hammer:
-   ![architecture](img_readme/architecture.jpg)
+   ![architecture2](img_readme/architecture2.jpg)
    
 ## API :pencil:
     {
     "ip_address" : "String",
     "might_go_places" : [
-            {
+        {
             "place1" : {
                 "place_name" : "String",
                 "visit_count" : "int",
                 "place_tag" : [],
                 "avg_spending_time" : "Double",
                 "Routes" : []
-            },
+            }
+        },
+            {
             "place2" : {
                 "place_name" : "String",
                 "visit_count" : "int",
@@ -28,7 +30,8 @@ Faculty of Information Technology, KMITL
                 "avg_spending_time" : "Double"
                 }
             }
-        ]
+        ],
+        "status" : "String"
     }
 ## Database in Service :file_folder:
    ![db](img_readme/db.png)
