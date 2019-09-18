@@ -6,6 +6,30 @@ Faculty of Information Technology, KMITL
     จะเป็น service ที่เก็บข้อมูลของผู้ใช้ ว่ามีพฤติกรรมชอบไปในสถานที่ใด
     แล้วจะแนะนำสถานที่ที่ผู้ใช้อาจจะสนใจเดินทางไป
   
+## Service Architecture
+   ![architecture](img_readme/architecture.jpg)
+   
+## API
+    {
+    "ip_address" : "String",
+    "might_go_places" : [
+            {
+            "place1" : {
+                "place_name" : "String",
+                "visit_count" : "int",
+                "place_tag" : [],
+                "avg_spending_time" : "Double",
+                "Routes" : []
+            },
+            "place2" : {
+                "place_name" : "String",
+                "visit_count" : "int",
+                "place_tag" : [],
+                "avg_spending_time" : "Double"
+                }
+            }
+        ]
+    }
 ## Database in Service
    ![db](img_readme/db.png)
 ### Schema
