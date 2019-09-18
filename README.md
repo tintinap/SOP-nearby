@@ -6,10 +6,10 @@ Faculty of Information Technology, KMITL
     จะเป็น service ที่เก็บข้อมูลของผู้ใช้ ว่ามีพฤติกรรมชอบไปในสถานที่ใด
     แล้วจะแนะนำสถานที่ที่ผู้ใช้อาจจะสนใจเดินทางไป
   
-## Service Architecture
+## Service Architecture :hammer:
    ![architecture](img_readme/architecture.jpg)
    
-## API
+## API :pencil:
     {
     "ip_address" : "String",
     "might_go_places" : [
@@ -30,7 +30,7 @@ Faculty of Information Technology, KMITL
             }
         ]
     }
-## Database in Service
+## Database in Service :file_folder:
    ![db](img_readme/db.png)
 ### Schema
     User(user_id, tag)
