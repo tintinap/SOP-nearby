@@ -14,36 +14,51 @@ Faculty of Information Technology, KMITL
     "ip_address" : "String",
     "might_go_places" : [
         {
-            "place1" : {
+            "place" : {
                 "place_name" : "String",
+                "location" : {
+                    "lat":"Double",
+                    "long":"Double",
+                 },
                 "visit_count" : "int",
                 "place_tag" : [],
                 "avg_spending_time" : "Double",
-                "Routes" : []
             }
         },
-            {
-            "place2" : {
+        {
+            "place" : {
                 "place_name" : "String",
+                "location" : {
+                    "lat":"Double",
+                    "long":"Double",
+              
+              },
                 "visit_count" : "int",
                 "place_tag" : [],
-                "avg_spending_time" : "Double"
-                }
+                "avg_spending_time" : "Double",
             }
-        ],
-        "status" : "String"
+        },
+        .
+        .
+        .
+    ],
+    "status" : "String"
     }
 ## Database in Service :file_folder:
-   ![db](img_readme/db.png)
+   ![db2](img_readme/db2.png)
 ### Schema
-    User(user_id, tag)
-    Location(tag_id, location_name)
+   User(**user_id**, ip)<br>
+   Place(**tag_id**, place_name, latitude, longitude)<br>
+   Tag(**tag_id**, tag_name)<br>
+   Place_User(**place_id**, **user_id**, avg_spending_time, visit_count)<br>
+   Place_Tag(**place_id**, **tag_id**)
+    
 ## Team Members :busts_in_silhouette:
 
-Name | StudentID | Github Username
------------- | ------------- | -------------
-นายตฤณภัทร ปลั่งศรี | 60070028 | @Tintinap
-นายนนท์ นิลขำ | 60070036 | @naive555
-นางสาวพัณณิตา เหมโก | 60070061 | @Pannita2212
-นายภูมิ เนตราคม | 60070074 | @xzsawq47
-นางสาวสุธาทิพย์ ศรีโกษะบาล | 60070104 | @yves99
+Name | StudentID | Github Username | Position
+------------ | ------------- | ------------- | -------------
+นายตฤณภัทร ปลั่งศรี | 60070028 | @Tintinap | Developer
+นายนนท์ นิลขำ | 60070036 | @naive555 | Developer
+นางสาวพัณณิตา เหมโก | 60070061 | @Pannita2212 | Business
+นายภูมิ เนตราคม | 60070074 | @xzsawq47 | Developer
+นางสาวสุธาทิพย์ ศรีโกษะบาล | 60070104 | @yves99 | Business
