@@ -4,7 +4,7 @@ from nearby.models import Place, User
 from nearby.input import Places
 
 def index(request):
-    print(11111111111111)
+    # print(11111111111111)
     place = Place.objects.filter(idplace=1).values()
     print(222222222222)
     print(place[0]['place_name'])
