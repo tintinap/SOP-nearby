@@ -12,8 +12,7 @@ class Places:
         self.ip_id = ip_id  # IP is a username of user
         self.place_api = []  # array for sorted place
 
-    def r_user_to_place(self, user_lat, user_lon, place_lat,
-                        place_lon):  # need edit to match with places api and user location that get
+    def r_user_to_place(self, user_lat, user_lon, place_lat,place_lon):  # need edit to match with places api and user location that get
         dlat = math.radians(place_lat - user_lat)  # should be self.user.lat self.place.lat
         dlon = math.radians(place_lon - user_lon)
         a = math.pow(math.sin(dlat / 2), 2) + math.cos(math.radians(place_lat)) * math.cos(
@@ -23,29 +22,24 @@ class Places:
         d = round(d, 3)
         return d
 
-    # def find_nearest_place(self):  # need edit to match with places api that get
-    #     nearest_place = None
-    #     r = 0
-    #     for i in self.places:
-    #         if self.r_user_to_place(self.user_location.lat, self.user_location.lon, self.places[i].lat,
-    #                                 self.places[i].lon) < self.r_user_to_place(self.places[i].viewport.lat1,
-    #                                                                            self.places[i].viewport.lon1,
-    #                                                                            self.places[i].viewport.lat2,
-    #                                                                            self.places[i].viewport.lon2) / 2
-    #             if r >= self.r_user_to_place(self.user_location.lat, self.user_location.lon, self.places[i].lat,
-    #                                          self.places[i].lon) and r != 0:
-    #                 nearest_place = self.places[i]
-    #     return nearest_place  # save r to this var too
+    def find_nearest_place(self):  # need edit to match with places api that get
+        nearest_place = None
+        r = 0
+        for i in self.places:
+            if self.r_user_to_place(self.user_lat, self.user_lon, self.places[i]['geometry']['location']['lat'].lat,self.places[i]['geometry']['location']['lon']) < self.r_user_to_place(self.places[i]['viewport']['northest']['lat'],self.places[i]['viewport']['northest']['lon'],self.places[i]['viewport']['southwest']['lat'],self.places[i]['viewport']['southwest']['lon']) / 2:
+                if r >= self.r_user_to_place(self.user_lat, self.user_lon, self.places[i]['geometry']['location']['lat'],self.places[i]['geometry']['location']['lon']) and r != 0:
+                    nearest_place = self.places[i]
+        return nearest_place  # save r to this var too
 
-    # def rank_place(self):  # can upgrad performance by check with tag #need edit to match with places api that get
-    #     place_saved = []
-    #     place_unsaved = []
-    #     for i in self.places:
-    #         if self.places[i] in db.getall(place):
-    #             place_saved.append(self.places[i])
-    #         else:
-    #             place_unsaved.append(self.places[i])
-    #     self.place_api = place_saved.sort + place_unsaved.sort  # place_saved sort by rank in db #place_unsaved sort by distance
+    def rank_place(self):  # can upgrad performance by check with tag #need edit to match with places api that get
+        place_saved = []
+        place_unsaved = []
+        for i in self.places:
+            if self.places[i] in db.getall(place): #place nameก้ได้
+                place_saved.append(self.places[i])
+            else:
+                place_unsaved.append(self.places[i])
+        self.place_api = place_saved.sort + place_unsaved.sort  # place_saved sort by rank in db #place_unsaved sort by distance
 
 
 # test
