@@ -35,8 +35,8 @@ def get_user_location(request):
         user_lat = request.GET.get('lat')
         user_lon = request.GET.get('longs')
 
-    print(user_lat)
-    print(user_lon)
+    # print(user_lat)
+    # print(user_lon)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(('google.com', 80))
@@ -93,6 +93,7 @@ def index(request):
     get_user_location(request)
     user.user_lat = get_user_location.user_lat
     user.user_lon = get_user_location.user_lon
+    print(user.find_nearest_place())
 
     if user.find_nearest_place() != None:  # in some place #place_view_port() function to find nearest place
         user.places = place_nearby.places_nearby(

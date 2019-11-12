@@ -27,7 +27,7 @@ class Places:
         r = 0
         for i in self.places:
             if self.r_user_to_place(self.user_lat, self.user_lon, i['geometry']['location']['lat'],i['geometry']['location']['lng']) < self.r_user_to_place(i['geometry']['viewport']['northeast']['lat'],i['geometry']['viewport']['northeast']['lng'],i['geometry']['viewport']['southwest']['lat'],i['geometry']['viewport']['southwest']['lng']) / 2:
-                if r >= self.r_user_to_place(self.user_lat, self.user_lon, i['geometry']['location']['lat'],i['geometry']['location']['lng']) and r != 0:
+                if r >= self.r_user_to_place(self.user_lat, self.user_lon, i['geometry']['location']['lat'],i['geometry']['location']['lng']) or r == 0:
                     nearest_place = i
         return nearest_place  # save r to this var too
 
