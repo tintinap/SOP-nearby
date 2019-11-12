@@ -13,22 +13,22 @@ class Place(models.Model):
     place_name = models.CharField(max_length=255, blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
-
     class Meta:
-        managed = False
-        db_table = 'place'
+        # managed = False
+        db_table = 'Place'
 
 
 class PlaceUser(models.Model):
-    place_idplace = models.ForeignKey(Place, models.DO_NOTHING, db_column='Place_idPlace', primary_key=True)  # Field name made lowercase.
+    placeuser_id = models.AutoField(db_column='placeuser_id', primary_key=True)
+    place_idplace = models.ForeignKey(Place, models.DO_NOTHING, db_column='Place_idPlace')  # Field name made lowercase.
     user_iduser = models.ForeignKey('User', models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
     avg_spending_time = models.FloatField(blank=True, null=True)
     visit_count = models.IntegerField(blank=True, null=True)
     ranking = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
-        db_table = 'place_user'
+        # managed = False
+        db_table = 'Place_User'
         unique_together = (('place_idplace', 'user_iduser'),)
 
 
@@ -37,8 +37,8 @@ class Tag(models.Model):
     tag_name = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = False
-        db_table = 'tag'
+        # managed = False
+        db_table = 'Tag'
 
 
 class TagPlace(models.Model):
@@ -46,8 +46,8 @@ class TagPlace(models.Model):
     place_idplace = models.ForeignKey(Place, models.DO_NOTHING, db_column='Place_idPlace')  # Field name made lowercase.
 
     class Meta:
-        managed = False
-        db_table = 'tag_place'
+        # managed = False
+        db_table = 'Tag_place'
         unique_together = (('tag_idtag', 'place_idplace'),)
 
 
@@ -56,5 +56,5 @@ class User(models.Model):
     ip = models.CharField(db_column='IP', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
-        db_table = 'user'
+        # managed = False
+        db_table = 'User'
