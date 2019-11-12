@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_globals.middleware.Global'
 ]
 
 ROOT_URLCONF = 'SOP.urls'
@@ -80,7 +81,7 @@ DATABASES = {
         'NAME': 'nearby',
         'USER':'60070074',
         'PASSWORD':'',
-        'HOST':'34.66.75.156',
+        'HOST':'127.0.0.1',
         'PORT':3306
     }
 }

@@ -5,9 +5,9 @@ from nearby.input import Places
 from . import place_nearby
 import geocoder
 import time
+from django_globals import globals
 
 import socket
-
 
 def compute_rank_point(visited_count, count_time_avg):
     rank = visited_count*0.8+count_time_avg*0.2
@@ -21,19 +21,19 @@ def get_user_location(request):
     # get_user_location.user_lat = float(my_location.latlng[0])
     # get_user_location.user_lon = float(my_location.latlng[1])
 
-    # get_user_location.user_lat = 13.767268
-    # get_user_location.user_lon = 100.5336083
+    get_user_location.user_lat = 13.767268
+    get_user_location.user_lon = 100.5336083
 
-    user_lat = request.GET.get('lat')
-    user_lon = request.GET.get('longs')
+    # user_lat = float(request.GET.get('lat'))
+    # user_lon = float(request.GET.get('longs'))
 
-    if user_lat is None or user_lon is None:
-        my_location = geocoder.ip('me')
-        get_user_location.user_lat = float(my_location.latlng[0])
-        get_user_location.user_lon = float(my_location.latlng[1])
-    else:
-        user_lat = request.GET.get('lat')
-        user_lon = request.GET.get('longs')
+    # if user_lat is None or user_lon is None:
+    #     my_location = geocoder.ip('me')
+    #     get_user_location.user_lat = float(my_location.latlng[0])
+    #     get_user_location.user_lon = float(my_location.latlng[1])
+    # else:
+    #     user_lat = float(request.GET.get('lat'))
+    #     user_lon = float(request.GET.get('longs'))
 
     # print(user_lat)
     # print(user_lon)
@@ -48,9 +48,10 @@ def get_user_location(request):
     }
     return render(request, template_name="nearby/location.html", context=context)
 
-
+count_time = 0
 def index(request):
-    count_time = 0
+    global count_time
+    print(count_time)
     count_time_to_get_api = 0
 
     place_type = "hospital"  # example
@@ -99,13 +100,18 @@ def index(request):
         user.places = place_nearby.places_nearby(
             user.user_lat, user.user_lon, place_type, api_key)  # get place location
         user.rank_place
+        print(count_time)
         # send_place_to_output(place_api)???
         print(1111111111111111111111111111111)
         print(user.find_nearest_place())
         current_place = user.find_nearest_place()['name']
         print(current_place)
         print(22222222222222222)
+        context = {
+            'place': place_api
+        }
         while user.find_nearest_place()['name'] == current_place:
+            print(count_time)
             get_user_location(request)
             user.user_lat = get_user_location.user_lat
             user.user_lon = get_user_location.user_lon
@@ -114,6 +120,7 @@ def index(request):
             user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)  # get new api after get out place
             user.rank_place
             # send_place_to_output(place_api)
+            return render(request, template_name="nearby/location.html", context=context)
 
         else:  # outside the place
             if count_time_to_get_api == 60:
@@ -141,5 +148,9 @@ def index(request):
         count_time = 0
         visited_count = 0
         current_place = ""
+    
+    context = {
+        'place': place_api
+    }
 
-    return HttpResponse(place_api)
+    return render(request, template_name="nearby/location.html", context=context)
