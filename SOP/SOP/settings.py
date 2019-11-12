@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'nearby',
         'USER':'60070074',
         'PASSWORD':'',
-        'HOST':'127.0.0.1',
+        'HOST':'34.66.75.156',
         'PORT':3306
     }
 }
