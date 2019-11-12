@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-# import py_eureka_client.eureka_client as eureka_client
+import py_eureka_client.eureka_client as eureka_client
 
 
 def main():

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <p>Your ip is: {{ ip }}</p>
+    <p>Automatic get your coordinates.</p>
+    <p id="demo">Wait for location...</p>
+    <form id="location_form" action="" method="get">
+        <input type="hidden" id="lat" name="lat" value="">
+        <input type="hidden" id="long" name="long" value="">
+        <input type="submit" id="subBut" style="display: none;">
+    </form>
+    <script>
+        var latlng = document.getElementById("demo");
+
+        var positionOptions = {
+            timeout: Infinity,
+            maximumAge: 0,
+            enableHighAccuracy: true
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(showPosition, showError, positionOptions);
+            } else {
+                latlng.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            latlng.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+            document.getElementById('lat').value = position.coords.latitude;
+            document.getElementById('long').value = position.coords.longitude;
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    latlng.innerHTML = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    latlng.innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    latlng.innerHTML = "The request to get user location timed out.";
+                    break;
+                default:
+                    latlng.innerHTML = "An unknown error occurred.";
+            }
+        }
+
+        function autoSubmit() {
+            document.getElementById("subBut").click()
+        }
+
+        getLocation();
+        setInterval(autoSubmit, 10000);
+    </script>
+</body>
+</html>
