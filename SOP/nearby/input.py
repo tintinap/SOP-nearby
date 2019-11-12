@@ -26,9 +26,9 @@ class Places:
         nearest_place = None
         r = 0
         for i in self.places:
-            if self.r_user_to_place(self.user_lat, self.user_lon, self.places[i]['geometry']['location']['lat'].lat,self.places[i]['geometry']['location']['lon']) < self.r_user_to_place(self.places[i]['viewport']['northest']['lat'],self.places[i]['viewport']['northest']['lon'],self.places[i]['viewport']['southwest']['lat'],self.places[i]['viewport']['southwest']['lon']) / 2:
-                if r >= self.r_user_to_place(self.user_lat, self.user_lon, self.places[i]['geometry']['location']['lat'],self.places[i]['geometry']['location']['lon']) and r != 0:
-                    nearest_place = self.places[i]
+            if self.r_user_to_place(self.user_lat, self.user_lon, i['geometry']['location']['lat'],i['geometry']['location']['lng']) < self.r_user_to_place(i['geometry']['viewport']['northeast']['lat'],i['geometry']['viewport']['northeast']['lng'],i['geometry']['viewport']['southwest']['lat'],i['geometry']['viewport']['southwest']['lng']) / 2:
+                if r >= self.r_user_to_place(self.user_lat, self.user_lon, i['geometry']['location']['lat'],i['geometry']['location']['lng']) and r != 0:
+                    nearest_place = i
         return nearest_place  # save r to this var too
 
     def rank_place(self):  # can upgrad performance by check with tag #need edit to match with places api that get

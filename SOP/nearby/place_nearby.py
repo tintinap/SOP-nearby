@@ -18,14 +18,14 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
     API_KEY = api_key
     location = str(lat)+","+str(lng)
     gmaps = googlemaps.Client(API_KEY)
-    print(11)
+    # print(11)
     places_result0 = gmaps.places_nearby(
         location = location,
         radius = 5000,
         type = place_type,
         language = language
     )
-    print(places_result0)
+    # print(places_result0)
     time.sleep(3)
     places_result1 = gmaps.places_nearby(page_token= places_result0['next_page_token'])
     time.sleep(3)
