@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 from nearby.models import Place, User
 from nearby.input import Places
 from . import place_nearby
@@ -142,4 +142,4 @@ def index(request):
         visited_count = 0
         current_place = ""
 
-    return HttpResponse(place_api)
+    return JsonResponse(place_api)
