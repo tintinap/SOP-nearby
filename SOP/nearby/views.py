@@ -17,8 +17,8 @@ def index(request):
     uid = get_ip.iduser  # user id
 
     # TEST VALUE #########
-    current_place = [{'geometry': {'location': {'lat': 12.23, 'lng': 24.56}},
-                      'name': 'hos', }]
+    current_place = [{'geometry': {'location': {'lat': 12.56, 'lng': 24.56}},
+                      'name': 'faaaa', }]
 
     place_all = Place.objects.values_list('place_name', flat=True)
     pid = ""  # place id
@@ -70,7 +70,7 @@ def index(request):
         #############################################################################################
 
         count_time += 1
-        if count_time >= 1:  # > 15 minutes #get data from current place dict
+        if count_time >= 900:  # > 15 minutes #get data from current place dict
 
             # (test) place_user = PlaceUser.objects.all().filter(place_idplace=1, user_iduser=1)
 
@@ -87,7 +87,7 @@ def index(request):
                 new_pu.avg_spending_time=count_time_avg
                 new_pu.save()
 
-                return HttpResponse('OK')
+                # return HttpResponse('OK')
 
             except:
                 new_pu = PlaceUser(
@@ -99,26 +99,11 @@ def index(request):
                 )
                 new_pu.save()
 
-                return HttpResponse("this value is not in table")
+                # return HttpResponse("this value is not in table")
 
-    # return HttpResponse(current_place[0])
+    # all_place = []
+    # all_user = PlaceUser.objects.all().filter(user_iduser=uid)
+    # for i in all_user:
+    #     all_place.append(i.place_idplace)
 
-def sh():
-    current_place = [{'geometry': {'location': {'lat': 12.23, 'lng': 24.56}},
-                      'name': 'hos', }]
-
-    place_all = Place.objects.values_list('place_name', flat=True)
-    pid = ""  # place id
-
-    if current_place[0].get('name') in place_all:  # save new place to Place table
-        pid = Place.objects.get(place_name=current_place[0].get('name')).idplace
-
-    else:
-        Place.objects.create(
-            place_name=current_place[0].get('name'),
-            latitude=current_place[0].get('geometry').get('location').get('lat'),
-            longitude=current_place[0].get('geometry').get('location').get('lng'),
-        )
-        pid = Place.objects.get(place_name=current_place[0].get('name')).idplace
-
-    return pid
+    # return HttpResponse(all_place[0].idplace) -> return = Id list in Place table

@@ -44,15 +44,13 @@ class Places:
         get_ip = User.objects.get(ip=self.ip_id)
         uid = get_ip.iduser
 
-        # place_user = PlaceUser.objects.all().filter(place_idplace=pid, user_iduser=uid)
-        places = PlaceUser.objects.get(user_iduser=self.ip_id)
-        place_rank =[]
-        for place in places:
-            place_rank.append(place)
+        all_place = []
+        all_user = PlaceUser.objects.all().filter(user_iduser=uid)
+        for i in all_user:
+            all_place.append(i.place_idplace)
 
-        get_place = Place.objects.values_list('place_name')
         for i in self.places:
-            if self.places[i] in get_place:
+            if self.places[i] in all_place:  # If not working use all_place.id !!
                 place_saved.append(self.places[i])
             else:
                 place_unsaved.append(self.places[i])
