@@ -147,4 +147,3 @@ def index(request):
     }
 
     return render(request, template_name="nearby/location.html", context=context)
-
