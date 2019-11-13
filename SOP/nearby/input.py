@@ -1,7 +1,8 @@
 import math
 import googlemaps
 import time
-
+from nearby.models import Place, User, PlaceUser
+from operator import itemgetter
 
 class Places:
 
@@ -32,14 +33,34 @@ class Places:
         return nearest_place  # save r to this var too
 
     def rank_place(self):  # can upgrad performance by check with tag #need edit to match with places api that get
+
         place_saved = []
         place_unsaved = []
+
+        # user id
+        get_ip = User.objects.get(ip=self.ip_id)
+        uid = get_ip.iduser
+
+        all_place_id = []
+        all_place = []
+        all_user = PlaceUser.objects.all().filter(user_iduser=uid)
+
+        for i in all_user:
+            all_place_id.append(i.place_idplace)
+            for i in all_place_id:
+                all_place.append(Place.objects.get(id_place=i).place_name)
+
         for i in self.places:
-            if self.places[i] in db.getall(place): #place nameก้ได้
-                place_saved.append(self.places[i])
+            if i['name'] in all_place:  # If not working use all_place.id !!
+                a = Place.objects.get(place_name=i['name'])
+                b = PlaceUser.objects.get(place_idplace=a.id_place,user_iduser=uid)
+                c = a.update(b)
+                place_saved.append(c)
             else:
-                place_unsaved.append(self.places[i])
-        self.place_api = place_saved.sort + place_unsaved.sort  # place_saved sort by rank in db #place_unsaved sort by distance
+                place_unsaved.append(i)
+        pss = sorted(place_saved, key=itemgetter('ranking')) 
+        puss = sorted(place_unsaved, key=itemgetter('name')) 
+        self.place_api = pss + puss  # place_saved sort by rank in db #place_unsaved sort by distance
 
 
 # test
