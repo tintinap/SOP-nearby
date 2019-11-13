@@ -128,14 +128,14 @@ def index(request):
 
     
 
-    if count_time >= 900:  # more than 15 mins #get data from db current place
-        count_time_avg = (db.get(current_place).count_time*db.get(
-            current_place).visited_count+count_time)/(db.get(current_place).visited_count+1)
-        visited_count = db.get(current_place).visited_count+1
-        rank_point = compute_rank_point(
-            visited_count, count_time_avg)  # compute rank point
-        db.save(current_place, visited_count,
-                count_time, rank_point)  # save to db
+    # if count_time >= 900:  # more than 15 mins #get data from db current place
+    #     count_time_avg = (db.get(current_place).count_time*db.get(
+    #         current_place).visited_count+count_time)/(db.get(current_place).visited_count+1)
+    #     visited_count = db.get(current_place).visited_count+1
+    #     rank_point = compute_rank_point(
+    #         visited_count, count_time_avg)  # compute rank point
+    #     db.save(current_place, visited_count,
+    #             count_time, rank_point)  # save to db
 
         count_time = 0
         visited_count = 0
