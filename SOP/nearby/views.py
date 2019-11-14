@@ -32,8 +32,6 @@ def get_user_location2():
 def get_user_location(request):
 
     my_location = geocoder.ip('me')
-    print("ooooooooo")
-    print(request.GET.get('lat'))
     
     get_user_location.user_lat = 18.285952
     get_user_location.user_lon = 99.506082
@@ -89,7 +87,7 @@ def index(request):
     if count_time_to_get_api == -1:
         count_time_to_get_api += 1
         get_user_location(request)
-        print(1111111111111111)
+        print("first start")
         place_api = place_nearby.places_nearby(get_user_location.user_lat, get_user_location.user_lon, place_type, api_key)
         user = Places(get_user_location.user_lat,get_user_location.user_lon, place_api, get_user_location.lo)
         user.rank_place()
@@ -99,12 +97,12 @@ def index(request):
         get_user_location(request)
         user.user_lat = get_user_location.user_lat
         user.user_lon = get_user_location.user_lon
-        print(222222222222222)
+        print("get new api at 1 min")
         user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
         user.rank_place()
 
-    else:
-        print(33333333333333)
+    elif count_time != 0:
+        print("count time api ++")
         count_time_to_get_api += 1
         get_user_location(request)
         user.user_lat = get_user_location.user_lat
@@ -113,46 +111,43 @@ def index(request):
     # time.sleep(1)
 
     try:
-        print(4444444444444)
+        print("get user success")
         db = User.objects.get(ip=user.ip_id)  # get IP from User db
+        uid = db.iduser
     except:
-        print(555555555555)
+        print("create user")
         User.objects.create(ip=user.ip_id)  # save to db
         db = User.objects.get(ip=user.ip_id)
+        uid = db.iduser
 
     if user.find_nearest_place() == current_place and user.find_nearest_place() != None:
-        print(66666666666666)
+        print("at some place")
         current_place = user.find_nearest_place()
         count_time += 1
+        count_time_to_get_api = 0
         # time.sleep(1)
         context = {
         # 'place': user.place_api
         'place':place_api
         }
         return render(request, template_name="nearby/location.html", context=context)
-    elif count_time != 0:
-        print(77777777777777)
-        user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
-        count_time = 0
 
-    
-
-    if count_time >= 900:  # more than 15 mins #get data from db current place
+    elif count_time >= 900:  # more than 15 mins #get data from db current place
         try:
-            print(88888888888888)
+            print("count time > 900 get all place")
             place_all = Place.objects.values_list('place_name', flat=True)
         except:
-            print(99999999999999999)
+            print("count time > 900 get no place to get")
             place_all = []
         
         # pid = ""  # place id
 
         if current_place.get('name') in place_all:  # save new place to Place table
-            print(100000000000000)
+            print("place already saved")
             pid = Place.objects.get(place_name=current_place.get('name')).idplace
 
         else:
-            print("aaaaaaaaaaaaaaaaa")
+            print("create place")
             Place.objects.create(
                 place_name=current_place.get('name'),
                 latitude=current_place.get('geometry').get('location').get('lat'),
@@ -163,7 +158,7 @@ def index(request):
 
 
         try:
-            print("bbbbbbbbbbbbbb")
+            print("update placeuser")
             place_user = PlaceUser.objects.all().filter(place_idplace=pid, user_iduser=uid)
             count_time_avg = (place_user[0].avg_spending_time * place_user[0].visit_count + place_user[0].avg_spending_time) / (place_user[0].visit_count + 1)
             visited_count = place_user[0].visit_count + 1
@@ -175,7 +170,7 @@ def index(request):
             new_pu.save()
 
         except:
-            print("cccccccccccccccccc")
+            print("create placeuser")
             new_pu = PlaceUser(
                 place_idplace=Place.objects.get(idplace=pid),
                 user_iduser=User.objects.get(iduser=uid),
@@ -185,21 +180,18 @@ def index(request):
             )
             new_pu.save()
 
-
-
-
-
-        # count_time_avg = (db.get(current_place).count_time*db.get(
-        #     current_place).visited_count+count_time)/(db.get(current_place).visited_count+1)
-        # visited_count = db.get(current_place).visited_count+1
-        # rank_point = compute_rank_point(
-        #     visited_count, count_time_avg)  # compute rank point
-        # db.save(current_place, visited_count,
-        #         count_time, rank_point)  # save to db
-
         count_time = 0
         visited_count = 0
         current_place = None
+
+    elif count_time != 0:
+        print("not in place")
+        user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
+        count_time = 0
+
+    
+
+    
     current_place = user.find_nearest_place()
     context = {
         # 'place': user.place_api
