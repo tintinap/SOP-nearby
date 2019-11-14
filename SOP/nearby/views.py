@@ -33,18 +33,18 @@ def get_user_location(request):
 
     my_location = geocoder.ip('me')
     
-    get_user_location.user_lat = 18.285952
-    get_user_location.user_lon = 99.506082
-    # get_user_location.user_lat = request.GET.get('lat')
-    # get_user_location.user_lon = request.GET.get('long')
+    # get_user_location.user_lat = 18.285952
+    # get_user_location.user_lon = 99.506082
+    get_user_location.user_lat = request.GET.get('lat')
+    get_user_location.user_lon = request.GET.get('long')
 
-    # if get_user_location.user_lat is None or get_user_location.user_lon is None:
-    #     my_location = geocoder.ip('me')
-    #     get_user_location.user_lat = float(my_location.latlng[0])
-    #     get_user_location.user_lon = float(my_location.latlng[1])
-    # else:
-    #     get_user_location.user_lat = float(request.GET.get('lat'))
-    #     get_user_location.user_lon = float(request.GET.get('long'))
+    if get_user_location.user_lat is None or get_user_location.user_lon is None:
+        my_location = geocoder.ip('me')
+        get_user_location.user_lat = float(my_location.latlng[0])
+        get_user_location.user_lon = float(my_location.latlng[1])
+    else:
+        get_user_location.user_lat = float(request.GET.get('lat'))
+        get_user_location.user_lon = float(request.GET.get('long'))
 
     print(get_user_location.user_lat)
     print(get_user_location.user_lon)
@@ -127,8 +127,8 @@ def index(request):
         count_time_to_get_api = 0
         # time.sleep(1)
         context = {
-        # 'place': user.place_api
-        'place':place_api
+        'place': user.place_api
+        # 'place':place_api
         }
         return render(request, template_name="nearby/location.html", context=context)
 
