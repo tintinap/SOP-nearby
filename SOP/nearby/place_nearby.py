@@ -1,9 +1,9 @@
 import time
 import googlemaps
 
-# def main():
-#     print(1)
-#     print(places_nearby("13.8754862","100.3751903","hospital","AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"))
+def main():
+    print(1)
+    print(places_nearby("13.8754862","100.3751903","hospital","AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"))
 
 def places_nearby(lat, lng, place_type, api_key, language='en'):
     """
@@ -12,7 +12,7 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
     language : String - same as language agrument in google map api(places api)
     api_key : String - your api key from google
     
-    return list of places thay will contain name, geometry and types of places api's result
+    return list of places that will contain name, geometry and types of places api's result
     """
 
     API_KEY = api_key
@@ -25,7 +25,7 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
         location = location,
         radius = 5000,
         type = place_type,
-        language = language
+        language = language,
     )
     # print(places_result0)
     if 'next_page_token' in places_result0:
@@ -51,4 +51,4 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
     # print(len(places_result))
     return places_result
 
-# main()
+main()
