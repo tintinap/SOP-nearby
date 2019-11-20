@@ -27,7 +27,7 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
         type = place_type,
         language = language,
     )
-    print(places_result0)
+    # print(places_result0)
     if 'next_page_token' in places_result0:
         time.sleep(3)
         places_result1 = gmaps.places_nearby(page_token= places_result0['next_page_token'])
@@ -48,7 +48,7 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
                 place_temp['types'] = place_r[j]['results'][i]['types']
                 p_r[j].append(place_temp)
     places_result = p0 + p1 +p2
-    print(len(places_result))
+    # print(len(places_result))
     return places_result
 
 main()
