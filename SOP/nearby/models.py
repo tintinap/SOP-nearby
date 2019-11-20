@@ -13,6 +13,7 @@ class Place(models.Model):
     place_name = models.CharField(max_length=255, blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True,null=True)
     class Meta:
         # managed = False
         db_table = 'Place'
@@ -24,7 +25,7 @@ class PlaceUser(models.Model):
     user_iduser = models.ForeignKey('User', models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
     avg_spending_time = models.FloatField(blank=True, null=True)
     visit_count = models.IntegerField(blank=True, null=True)
-    ranking = models.IntegerField(blank=True, null=True)
+    ranking = models.FloatField(blank=True, null=True)
 
     class Meta:
         # managed = False

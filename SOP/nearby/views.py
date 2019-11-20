@@ -33,8 +33,8 @@ def get_user_location(request):
 
     my_location = geocoder.ip('me')
     
-    # get_user_location.user_lat = 18.285952
-    # get_user_location.user_lon = 99.506082
+    # get_user_location.user_lat = 18.291952 
+    # get_user_location.user_lon = 99.493211
     get_user_location.user_lat = request.GET.get('lat')
     get_user_location.user_lon = request.GET.get('long')
 
@@ -92,7 +92,7 @@ def index(request):
         user = Places(get_user_location.user_lat,get_user_location.user_lon, place_api, get_user_location.lo)
         user.rank_place()
 
-    if count_time_to_get_api == 60 :
+    if count_time_to_get_api == 6 :
         count_time_to_get_api = 0
         get_user_location(request)
         user.user_lat = get_user_location.user_lat
@@ -101,7 +101,8 @@ def index(request):
         user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
         user.rank_place()
 
-    elif count_time != 0:
+    # elif count_time != 0:
+    else:
         print("count time api ++")
         count_time_to_get_api += 1
         get_user_location(request)
@@ -125,6 +126,9 @@ def index(request):
         current_place = user.find_nearest_place()
         count_time += 1
         count_time_to_get_api = 0
+        # if(count_time == 10):
+        #     current_place = {'geometry': {'location': {'lat': 12.886, 'lng': 24.5906}},
+        #               'name': 'nnnnn', }
         # time.sleep(1)
         context = {
         'place': user.place_api
@@ -132,7 +136,7 @@ def index(request):
         }
         return render(request, template_name="nearby/location.html", context=context)
 
-    elif count_time >= 900:  # more than 15 mins #get data from db current place
+    elif count_time >= 90:  # more than 15 mins #get data from db current place
         try:
             print("count time > 900 get all place")
             place_all = Place.objects.values_list('place_name', flat=True)
@@ -152,6 +156,7 @@ def index(request):
                 place_name=current_place.get('name'),
                 latitude=current_place.get('geometry').get('location').get('lat'),
                 longitude=current_place.get('geometry').get('location').get('lng'),
+                image=current_place.get('image')
             )
             pid = Place.objects.get(place_name=current_place.get('name')).idplace
 
@@ -167,6 +172,7 @@ def index(request):
             new_pu = PlaceUser.objects.get(place_idplace=pid,user_iduser=uid)
             new_pu.visit_count=visited_count
             new_pu.avg_spending_time=count_time_avg
+            new_pu.ranking=rank_point
             new_pu.save()
 
         except:
