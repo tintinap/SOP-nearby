@@ -50,9 +50,20 @@ class Places:
         for i in all_user:
             all_place_id.append(i.place_idplace.idplace)
             for i in all_place_id:
-                all_place.append(Place.objects.get(idplace=i).place_name)
+                a = []
+                a.append(Place.objects.get(idplace=i).latitude)
+                a.append(Place.objects.get(idplace=i).longitude)
+                print(a)
+                all_place.append(a)
+                print(all_place)
+                # all_place.append(Place.objects.get(idplace=i).place_name)
+
         for i in self.places:
-            if i['name'] in all_place:  # If not working use all_place.id !!
+            a = []
+            a.append(i['geometry']['location']['lat'])
+            a.append(i['geometry']['location']['lng'])
+            print(a)
+            if a in all_place:  # If not working use all_place.id !!
                 a = Place.objects.filter(place_name=i['name']).values()
                 b = PlaceUser.objects.filter(place_idplace=a.id_place,user_iduser=uid).values()
                 d = a[0]
