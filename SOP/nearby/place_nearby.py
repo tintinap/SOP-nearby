@@ -1,9 +1,9 @@
 import time
 import googlemaps
 
-def main():
-    print(1)
-    print(places_nearby("13.8754862","100.3751903","hospital","AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"))
+# def main():
+#     print(1)
+#     print(places_nearby("13.8754862","100.3751903","hospital","AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"))
 
 def places_nearby(lat, lng, place_type, api_key, language='en'):
     """
@@ -51,4 +51,4 @@ def places_nearby(lat, lng, place_type, api_key, language='en'):
     # print(len(places_result))
     return places_result
 
-main()
+# main()

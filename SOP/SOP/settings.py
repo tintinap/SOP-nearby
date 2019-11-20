@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nearby',
-        'USER':'60070074',
+        'USER':'60070028',
         'PASSWORD':'',
         'HOST':'34.66.75.156',
         'PORT':3306
