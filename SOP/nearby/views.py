@@ -81,7 +81,7 @@ def index(request):
     print(str(count_time_to_get_api)+" count time to get api")
     print(str(count_time)+" count time")
     print(str(current_place)+" current place")
-    print(user)
+    # print(user.place_api)
     
   # outside the place
     if count_time_to_get_api == -1:

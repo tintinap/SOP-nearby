@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  django:
+    container_name: 'pj_django'
+    build:
+      context: ./docker/django
+    volumes:
+      - ./SOP:/app
+    command: python manage.py runserver
