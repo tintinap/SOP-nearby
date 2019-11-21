@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search From Type</title>
+</head>
 <body>
     <p>Your ip is: {{ ip }}</p>
     <p>Automatic get your coordinates.</p>
@@ -9,10 +13,6 @@
         <input type="hidden" id="lat" name="lat" value="">
         <input type="hidden" id="long" name="long" value="">
         <input type="submit" id="subBut" style="display: none;">
-    </form>
-    <form action="{% url 'location' %}" id="type_form" method="get">
-        <label>Tag Location: <input type="text" name="place_type" id=place_type></label>
-        <input type="submit" value="Search">
     </form>
     <p id="results"></p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -69,7 +69,6 @@
                 long: long,
                 csrfmiddlewaretoken: CSRFtoken
             });
-            event.preventDefault();
          });
 
         getLocation();
