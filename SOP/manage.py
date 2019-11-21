@@ -6,10 +6,10 @@ import py_eureka_client.eureka_client as eureka_client
 
 
 def main():
-    # eureka_client.init(eureka_server="http://localhost:8761/eureka/",
-    #                     app_name="SUGGEST-NEARBY-API",
-    #                     instance_port=8989
-    # )
+    eureka_client.init(eureka_server="http://localhost:8761/eureka/",
+                        app_name="SUGGEST-NEARBY-API",
+                        instance_port=8989
+    )
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SOP.settings')
     try:
         from django.core.management import execute_from_command_line
