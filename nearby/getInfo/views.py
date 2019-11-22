@@ -10,7 +10,8 @@ def get_location(request):
     lat = request.POST.get('lat')
     lng = request.POST.get('long')
 
-    if request.POST.get('lat') is None or request.POST.get('long') is None:
+    if request.POST.get('lat') is None or request.POST.get('long') is None or request.POST.get('lat') == "" or\
+            request.POST.get('long') == "":
         lat = latlng[0]
         lng = latlng[1]
 
