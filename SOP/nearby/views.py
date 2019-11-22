@@ -35,16 +35,16 @@ def get_user_location(request):
     
     # get_user_location.user_lat = 18.291952 
     # get_user_location.user_lon = 99.493211
-    get_user_location.user_lat = request.GET.get('lat')
-    get_user_location.user_lon = request.GET.get('long')
+    get_user_location.user_lat = request.POST.get('lat')
+    get_user_location.user_lon = request.POST.get('long')
 
     if get_user_location.user_lat is None or get_user_location.user_lon is None:
         my_location = geocoder.ip('me')
         get_user_location.user_lat = float(my_location.latlng[0])
         get_user_location.user_lon = float(my_location.latlng[1])
     else:
-        get_user_location.user_lat = float(request.GET.get('lat'))
-        get_user_location.user_lon = float(request.GET.get('long'))
+        get_user_location.user_lat = float(request.POST.get('lat'))
+        get_user_location.user_lon = float(request.POST.get('long'))
 
     print(get_user_location.user_lat)
     print(get_user_location.user_lon)
@@ -58,6 +58,14 @@ def get_user_location(request):
         'ip': get_user_location.lo
     }
     return render(request, template_name="nearby/location.html", context=context)
+
+
+def search(request):
+    global place_type
+    if request.POST.get('place_type') is not None:
+        place_type = request.POST.get('place_type')
+    print(place_type)
+    return render(request, template_name='nearby/search.html')
 
 
 count_time = 0
