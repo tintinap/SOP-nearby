@@ -1,10 +1,12 @@
 version: '3.3'
 
 services:
-  django:
-    container_name: 'pj_django'
+  app:
+    container_name: nearby-django
     build:
       context: ./docker/django
+    ports:
+      - 8000:8000
     volumes:
       - ./SOP:/app
-    command: python manage.py runserver
+    command: python manage.py runserver 0.0.0.0:8000
