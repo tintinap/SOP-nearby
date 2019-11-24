@@ -44,9 +44,11 @@ def get_user_location(request):
         my_location = geocoder.ip('me')
         get_user_location.user_lat = float(my_location.latlng[0])
         get_user_location.user_lon = float(my_location.latlng[1])
+        print(1)
     else:
         get_user_location.user_lat = float(request.POST.get('lat'))
         get_user_location.user_lon = float(request.POST.get('long'))
+        print(2)
 
     print(get_user_location.user_lat)
     print(get_user_location.user_lon)
