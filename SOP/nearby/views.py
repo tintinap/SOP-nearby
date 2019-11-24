@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from nearby.models import Place, User ,PlaceUser
 from nearby.input import Places
 from . import place_nearby
+from django.core import serializers
 import geocoder
 import time
 from django_globals import globals
@@ -85,7 +86,10 @@ def index(request, type):
     global api_key
     global user
     global place_api
+    context = dict()
 
+    if type == 'nearby':
+        type = None
     place_type= type
     print(place_type)
     print(str(count_time_to_get_api)+" count time to get api")
@@ -145,8 +149,10 @@ def index(request, type):
         # 'place':place_api
         }
         # return render(request, template_name="nearby/location.html", context=context)
-        print(user)
-        return JsonResponse(user, safe=False)
+        # print(user)
+        # user_show = serializers.serialize('json', [ user, ])
+        # return JsonResponse(user_show, safe=False)
+        return JsonResponse(context, safe=False)
 
     elif count_time >= 90:  # more than 15 mins #get data from db current place
         try:
@@ -215,7 +221,8 @@ def index(request, type):
         # 'place': user.place_api
         'place' : user.place_api
     }
-    print(user.places)
+    # print(user.places)
 
     # return render(request, template_name="nearby/location.html", context=context)
-    return JsonResponse(user, safe=False)
+    # user_show = serializers.serialize('json', user)
+    return JsonResponse(context, safe=False)
