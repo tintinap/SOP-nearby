@@ -7,6 +7,7 @@ from django.core import serializers
 import geocoder
 import time
 from django_globals import globals
+import json
 
 import socket
 
@@ -61,7 +62,7 @@ def get_user_location(request):
     context = {
         'ip': get_user_location.lo
     }
-    return render(request, template_name="nearby/location.html", context=context)
+    return render(request, template_name="nearby/location.html", context={'json':json_string})
 
 
 def search(request):
@@ -81,6 +82,7 @@ api_key = "AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"
 get_user_location2()
 place_api = place_nearby.places_nearby(get_user_location2.user_lat, get_user_location2.user_lon, place_type, api_key)
 user = Places(get_user_location2.user_lat,get_user_location2.user_lon, place_api, get_user_location2.lo)
+json_string = {}
 
 def index(request, type):
     global current_place
@@ -91,6 +93,7 @@ def index(request, type):
     global api_key
     global user
     global place_api
+    global json_string
 
     if type == 'nearby':
         type = None
@@ -161,11 +164,17 @@ def index(request, type):
         'place': user.place_api
         # 'place':place_api
         }
-        # return render(request, template_name="nearby/location.html", context=context)
+        print('hi')
+        json_string =  json.dumps(context)
+        # print(json_string)
+        return render(request, 
+                template_name="nearby/location.html", 
+                context={'json':json_string}
+            )
         # print(user)
         # user_show = serializers.serialize('json', [ user, ])
         # return JsonResponse(user_show, safe=False)
-        return JsonResponse(context, safe=False)
+        # return JsonResponse(context, safe=False)
 
     elif count_time >= 90:  # more than 15 mins #get data from db current place
         try:
@@ -235,7 +244,12 @@ def index(request, type):
         'place' : user.place_api
     }
     # print(user.places)
-
-    # return render(request, template_name="nearby/location.html", context=context)
+    print('hi2')
+    json_string =  json.dumps(context)
+    # print(json_string)
+    return render(request, 
+            template_name="nearby/location.html", 
+            context={'json':json_string}
+        )
     # user_show = serializers.serialize('json', user)
-    return JsonResponse(context, safe=False)
+    # return JsonResponse(context, safe=False)
