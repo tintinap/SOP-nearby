@@ -84,7 +84,7 @@ place_api = place_nearby.places_nearby(get_user_location2.user_lat, get_user_loc
 user = Places(get_user_location2.user_lat,get_user_location2.user_lon, place_api, get_user_location2.lo)
 json_string = {}
 
-def index(request, type):
+def index(request, type=None):
     global current_place
     global count_time
     global count_time_to_get_api
@@ -95,8 +95,8 @@ def index(request, type):
     global place_api
     global json_string
 
-    if type == 'nearby':
-        type = None
+    # if type == 'nearby':
+    #     type = None
     place_type= type
     print(place_type)
     print(str(count_time_to_get_api)+" count time to get api")
@@ -105,7 +105,7 @@ def index(request, type):
     # print(user.place_api)
     
   # outside the place
-    if previus_place_type != place_type:
+    if previus_place_type != place_type and place_type != None:
         previus_place_type = place_type
         get_user_location(request)
         user.user_lat = get_user_location.user_lat
