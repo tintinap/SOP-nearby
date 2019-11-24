@@ -39,7 +39,8 @@ def get_user_location(request):
     get_user_location.user_lat = request.POST.get('lat')
     get_user_location.user_lon = request.POST.get('long')
 
-    if get_user_location.user_lat is None or get_user_location.user_lon is None:
+    if request.POST.get('lat') is None or request.POST.get('long') is None or request.POST.get('lat') == "" or \
+            request.POST.get('long') == "":
         my_location = geocoder.ip('me')
         get_user_location.user_lat = float(my_location.latlng[0])
         get_user_location.user_lon = float(my_location.latlng[1])
