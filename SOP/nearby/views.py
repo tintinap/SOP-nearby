@@ -106,6 +106,7 @@ def index(request, type):
         user.user_lon = get_user_location.user_lon
         print("place_type change")
         user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
+        user.rank_place()
 
     if count_time_to_get_api == -1:
         count_time_to_get_api += 1
