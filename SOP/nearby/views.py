@@ -106,6 +106,7 @@ def index(request, type=None):
     
   # outside the place
     if previus_place_type != place_type and place_type != None:
+        #TODO put return in this 
         previus_place_type = place_type
         get_user_location(request)
         user.user_lat = get_user_location.user_lat
@@ -113,6 +114,16 @@ def index(request, type=None):
         print("place_type change")
         user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
         user.rank_place()
+        context = {
+        'place': user.place_api
+        # 'place':place_api
+        }
+        json_string =  json.dumps(context)
+        # print(json_string)
+        return render(request, 
+                template_name="nearby/location.html", 
+                context={'json':json_string}
+            )
 
     if count_time_to_get_api == -1:
         count_time_to_get_api += 1
