@@ -72,7 +72,8 @@ def search(request):
 count_time = 0
 current_place = None
 count_time_to_get_api = -1
-place_type = "hospital"  # example
+place_type = ""  # example
+previus_place_type = ""
 api_key = "AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"
 get_user_location2()
 place_api = place_nearby.places_nearby(get_user_location2.user_lat, get_user_location2.user_lon, place_type, api_key)
@@ -83,10 +84,10 @@ def index(request, type):
     global count_time
     global count_time_to_get_api
     global place_type
+    global previus_place_type
     global api_key
     global user
     global place_api
-    context = dict()
 
     if type == 'nearby':
         type = None
@@ -98,6 +99,14 @@ def index(request, type):
     # print(user.place_api)
     
   # outside the place
+    if previus_place_type != place_type:
+        previus_place_type = place_type
+        get_user_location(request)
+        user.user_lat = get_user_location.user_lat
+        user.user_lon = get_user_location.user_lon
+        print("place_type change")
+        user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
+
     if count_time_to_get_api == -1:
         count_time_to_get_api += 1
         get_user_location(request)
