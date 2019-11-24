@@ -77,7 +77,7 @@ get_user_location2()
 place_api = place_nearby.places_nearby(get_user_location2.user_lat, get_user_location2.user_lon, place_type, api_key)
 user = Places(get_user_location2.user_lat,get_user_location2.user_lon, place_api, get_user_location2.lo)
 
-def index(request):
+def index(request, type):
     global current_place
     global count_time
     global count_time_to_get_api
@@ -86,6 +86,8 @@ def index(request):
     global user
     global place_api
 
+    place_type= type
+    print(place_type)
     print(str(count_time_to_get_api)+" count time to get api")
     print(str(count_time)+" count time")
     print(str(current_place)+" current place")
@@ -142,7 +144,9 @@ def index(request):
         'place': user.place_api
         # 'place':place_api
         }
-        return render(request, template_name="nearby/location.html", context=context)
+        # return render(request, template_name="nearby/location.html", context=context)
+        print(user)
+        return JsonResponse(user, safe=False)
 
     elif count_time >= 90:  # more than 15 mins #get data from db current place
         try:
@@ -211,5 +215,7 @@ def index(request):
         # 'place': user.place_api
         'place' : user.place_api
     }
+    print(user.places)
 
-    return render(request, template_name="nearby/location.html", context=context)
+    # return render(request, template_name="nearby/location.html", context=context)
+    return JsonResponse(user, safe=False)
