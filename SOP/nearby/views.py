@@ -60,9 +60,10 @@ def get_user_location(request):
     get_user_location.lo = s.getsockname()[0]
 
     context = {
-        'ip': get_user_location.lo
+        'ip': get_user_location.lo,
+        'json': json_string
     }
-    return render(request, template_name="nearby/location.html", context={'json':json_string})
+    return render(request, template_name="nearby/location.html", context=context)
 
 
 def search(request):
@@ -177,16 +178,13 @@ def index(request, type=None):
         #               'name': 'nnnnn', }
         # time.sleep(1)
         context = {
-        'place': user.place_api
-        # 'place':place_api
+            'place': user.place_api
+            # 'place':place_api
         }
         print('hi')
-        json_string =  json.dumps(context)
+        json_string = json.dumps(context)
         # print(json_string)
-        return render(request, 
-                template_name="nearby/location.html", 
-                context={'json':json_string}
-            )
+        return render(request, template_name="nearby/location.html", context={'json': json_string})
         # print(user)
         # user_show = serializers.serialize('json', [ user, ])
         # return JsonResponse(user_show, safe=False)
@@ -251,21 +249,15 @@ def index(request, type=None):
         user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
         count_time = 0
 
-    
-
-    
     current_place = user.find_nearest_place()
     context = {
         # 'place': user.place_api
-        'place' : user.place_api
+        'place': user.place_api
     }
     # print(user.places)
     print('hi2')
-    json_string =  json.dumps(context)
+    json_string = json.dumps(context)
     # print(json_string)
-    return render(request, 
-            template_name="nearby/location.html", 
-            context={'json':json_string}
-        )
+    return render(request, template_name="nearby/location.html", context={'json':json_string})
     # user_show = serializers.serialize('json', user)
     # return JsonResponse(context, safe=False)

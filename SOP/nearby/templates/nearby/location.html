@@ -28,10 +28,12 @@
             <input type="submit" id="subBut" style="display: none;">
         </form>
         <p id="results"></p>
+        <pre id="json"></pre>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         var latlng = document.getElementById("demo");
+        document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
 
         var positionOptions = {
             timeout: Infinity,
