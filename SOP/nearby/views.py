@@ -79,9 +79,9 @@ count_time_to_get_api = -1
 place_type = ""  # example
 previus_place_type = ""
 api_key = "AIzaSyBbq0VljhDuyG5TkqguBiL9Wnnq-_BTa1k"
-get_user_location2()
-place_api = place_nearby.places_nearby(get_user_location2.user_lat, get_user_location2.user_lon, place_type, api_key)
-user = Places(get_user_location2.user_lat,get_user_location2.user_lon, place_api, get_user_location2.lo)
+# get_user_location2()
+# place_api = place_nearby.places_nearby(get_user_location2.user_lat, get_user_location2.user_lon, place_type, api_key)
+# user = Places(get_user_location2.user_lat,get_user_location2.user_lon, place_api, get_user_location2.lo)
 json_string = {}
 
 def index(request, type=None):
@@ -108,22 +108,27 @@ def index(request, type=None):
     if previus_place_type != place_type and place_type != None:
         #TODO put return in this 
         previus_place_type = place_type
-        get_user_location(request)
-        user.user_lat = get_user_location.user_lat
-        user.user_lon = get_user_location.user_lon
+        # get_user_location(request)
+        # user.user_lat = get_user_location.user_lat
+        # user.user_lon = get_user_location.user_lon
         print("place_type change")
-        user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
-        user.rank_place()
-        context = {
-        'place': user.place_api
+        # user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
+        # user.rank_place()
+        # context = {
+        # 'place': user.place_api
         # 'place':place_api
-        }
-        json_string =  json.dumps(context)
+        # }
+        # json_string =  json.dumps(context)
         # print(json_string)
+        # return render(request, 
+        #         template_name="nearby/location.html", 
+        #         context={'json':json_string}
+        #     )
         return render(request, 
-                template_name="nearby/location.html", 
-                context={'json':json_string}
+                template_name="nearby/location.html"
             )
+    else:
+        place_type = previus_place_type
 
     if count_time_to_get_api == -1:
         count_time_to_get_api += 1
