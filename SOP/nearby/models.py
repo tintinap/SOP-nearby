@@ -55,6 +55,9 @@ class TagPlace(models.Model):
 class User(models.Model):
     iduser = models.AutoField(db_column='idUser', primary_key=True)  # Field name made lowercase.
     ip = models.CharField(db_column='IP', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
+    lat = models.FloatField(blank=True, null=True,default='0.0')
+    lng = models.FloatField(blank=True, null=True,default='0.0')
+    type = models.CharField(max_length=255, blank=True, null=True,default='none')
 
     class Meta:
         # managed = False
