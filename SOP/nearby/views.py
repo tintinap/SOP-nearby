@@ -35,8 +35,18 @@ def update_lat_lng(request): #it should contain lat lng from request from fronte
     global place_type
     get_user_location()
 
-    lat = request.GET.get('lat')
-    lng = request.GET.get('lng')
+    # lat = request.GET.get('lat')
+    # lng = request.GET.get('lng')
+
+    if request.GET.get('lat') is None or request.GET.get('lng') is None or request.GET.get('lat') == "" or request.GET.get('lng') == "":
+        pass
+    else:
+        lat = float(request.GET.get('lat'))
+        print(lat)
+        lng = float(request.GET.get('lng'))
+        print(lng)
+    
+
     db = User.objects.get(ip=get_user_location.lo)  # get IP from User db
         # uid = db.iduser
         # new_pu = PlaceUser.objects.get(place_idplace=pid,user_iduser=uid)
