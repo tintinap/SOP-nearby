@@ -2,27 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Search From Type</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Get Your Location</title>
 </head>
 <body>
-    <div class="container">
-        <p>Your ip is: {{ ip }}</p>
-        <p id="demo">Wait for location...</p>
-        <form id="location_form" name="location_form" action="{% url 'location' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" id="lat" name="lat" value="">
-            <input type="hidden" id="long" name="long" value="">
-            <input type="submit" id="subBut" style="display: none;">
-        </form>
-    </div>
-    <pre id="json"></pre>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script id="json-data" type="application/json">{"foo": "bar"}</script>
     <script>
-        var latlng = document.getElementById("demo");
+        var form = document.createElement("form");
+        form.id = "location_form";
+        form.setAttribute('method', "get");
+        form.setAttribute('action', "#");
 
-        document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
+        var lat = document.createElement("input");
+        lat.type = "hidden";
+        lat.name = "lat";
+        lat.id = "lat";
+
+        var lng = document.createElement("input");
+        lng.type = "hidden";
+        lng.name = "lng";
+        lng.id = "lng";
+
+        var subBut = document.createElement("input");
+        subBut.type = "submit";
+        subBut.name = "subBut";
+        subBut.id = "subBut";
+
+        var style = document.createElement('style');
+          style.innerHTML = `
+          #subBut {
+          display: none;
+          }
+          `;
+        document.head.appendChild(style);
+
+        var error = document.createElement("p");
+        error.id = "errorMessage";
+
+
+        form.append(lat);
+        form.append(lng);
+        form.append(subBut);
+
+        $("body").append(form, error);
 
         var positionOptions = {
             timeout: Infinity,
@@ -34,45 +55,46 @@
             if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(showPosition, showError, positionOptions);
             } else {
-                latlng.innerHTML = "Geolocation is not supported by this browser.";
+                error.innerHTML = "Geolocation is not supported by this browser.";
             }
         }
 
         function showPosition(position) {
-            latlng.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
-            document.getElementById('lat').value = position.coords.latitude;
-            document.getElementById('long').value = position.coords.longitude;
+            lat.value = position.coords.latitude.toString();
+            lng.value = position.coords.longitude.toString();
         }
 
-        function showError(error) {
-            switch (error.code) {
+        function showError(e) {
+            switch (e.code) {
                 case error.PERMISSION_DENIED:
-                    latlng.innerHTML = "User denied the request for Geolocation.";
-                    console.log('User denied the request for Geolocation.');
+                    error.innerHTML = "User denied the request for Geolocation.";
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    latlng.innerHTML = "Location information is unavailable.";
-                    console.log('Location information is unavailable.');
+                    error.innerHTML = "Location information is unavailable.";
                     break;
                 case error.TIMEOUT:
-                    latlng.innerHTML = "The request to get user location timed out.";
-                    console.log('The request to get user location timed out.');
+                    error.innerHTML = "The request to get user location timed out.";
                     break;
                 default:
-                    latlng.innerHTML = "An unknown error occurred.";
-                    console.log('An unknown error occurred.')
+                    error.innerHTML = "An unknown error occurred.";
             }
         }
 
         function autoSubmit() {
-            document.getElementById("subBut").click()
+            $("#subBut").click();
         }
+
+        $('#location_form').submit(function(e) {
+            e.preventDefault();
+            console.log('sent');
+            $.get($(this).attr('action'), {
+                lat: lat.value,
+                lng: lng.value
+            });
+         });
 
         getLocation();
         setInterval(autoSubmit, 10000);
     </script>
-    <script>
-        var jsonObject = JSON.parse('{{ json | safe }}');
-     </script>
 </body>
 </html>

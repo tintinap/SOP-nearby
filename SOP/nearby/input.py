@@ -74,10 +74,8 @@ class Places:
         pss = sorted(place_saved, key=itemgetter('ranking'),reverse=True) 
         puss = sorted(place_unsaved, key=itemgetter('name')) 
         self.place_api = pss + puss  # place_saved sort by rank in db #place_unsaved sort by distance
+        return self.place_api
 
-
-# test
-# acc = Place(1,2,3)
-# acc.r_user_to_place(38.898556,-77.037852,38.897147,-77.043934)
-
-# print(acc.r_user_to_place(38.898556,-77.037852,38.897147,-77.043934))
+# class test:
+#     def __init__(self):
+#         self.count = 0

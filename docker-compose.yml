@@ -9,4 +9,13 @@ services:
       - 8000:8000
     volumes:
       - ./SOP:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py migrate && nohup python manage.py runserver 0.0.0.0:8000"
+
+  tasks:
+    build:
+      context: ./docker/django
+    volumes:
+      - ./SOP:/app
+    command: python3 manage.py process_tasks
+    depends_on:
+      - app
