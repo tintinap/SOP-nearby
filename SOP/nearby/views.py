@@ -75,9 +75,10 @@ def updateJSON():
     global lng
     global index1
     get_user_location()
-    lati = lat
-    long = lng
-    print(User.objects.filter(ip=get_user_location.lo).values())
+    user_info = User.objects.filter(ip=get_user_location.lo).values()
+    lati = user_info[0]['lat']
+    long = user_info[0]['lng']
+    # print(User.objects.filter(ip=get_user_location.lo).values())
     print(str(index1)+"index")
     print(place_type)
     print(previus_place_type)
@@ -87,8 +88,8 @@ def updateJSON():
     print(str(current_place)+" current place")
     
   # outside the place
-    if previus_place_type != place_type and (place_type != None or place_type != ""):
-        previus_place_type = place_type
+    if previus_place_type != user_info[0]['type'] and (user_info[0]['type'] != None or user_info[0]['type'] != ""):
+        previus_place_type = user_info[0]['type']
         print("place_type change")
         # return render(request, 
         #         template_name="nearby/location.html"
