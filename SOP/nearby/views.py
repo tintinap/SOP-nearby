@@ -63,7 +63,8 @@ def get_user_location(request):
         'ip': get_user_location.lo,
         'json': json_string
     }
-    return render(request, template_name="nearby/location.html", context=context)
+    # return render(request, template_name="nearby/location.html", context=context)
+    render(request, template_name="nearby/location.html", context=context), JsonResponse(context, safe=False)
 
 
 def search(request):
@@ -185,7 +186,8 @@ def index(request, type=None):
         json_string = json.dumps(context)
         # json_string = serializers.serialize('json', context)
         # print(json_string)
-        return render(request, template_name="nearby/location.html", context={'json': json_string})
+        render(request, template_name="nearby/location.html", context={'json':json_string}), JsonResponse(context, safe=False)
+        # return render(request, template_name="nearby/location.html", context={'json': json_string})
         # print(user)
         # user_show = serializers.serialize('json', [ user, ])
         # return JsonResponse(user_show, safe=False)
@@ -259,6 +261,7 @@ def index(request, type=None):
     print('hi2')
     json_string = json.dumps(context)
     # print(json_string)
-    return render(request, template_name="nearby/location.html", context={'json':json_string})
+    return render(request, template_name="nearby/location.html", context={'json':json_string}), JsonResponse(context, safe=False)
+    # return render(request, template_name="nearby/location.html", context={'json':json_string})
     # user_show = serializers.serialize('json', user)
     # return JsonResponse(context, safe=False)
