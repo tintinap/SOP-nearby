@@ -16,13 +16,13 @@
             <input type="submit" id="subBut" style="display: none;">
         </form>
     </div>
-    <pre id="json">{{ json }}</pre>
+    <pre id="json"></pre>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script id="json-data" type="application/json">{"foo": "bar"}</script>
     <script>
         var latlng = document.getElementById("demo");
 
-        // document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
+        document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
 
         var positionOptions = {
             timeout: Infinity,
