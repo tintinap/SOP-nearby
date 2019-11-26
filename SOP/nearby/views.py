@@ -182,7 +182,8 @@ def index(request, type=None):
             # 'place':place_api
         }
         print('hi')
-        json_string = json.dumps(context)
+        # json_string = json.dumps(context)
+        json_string = serializers.serialize('json', context)
         # print(json_string)
         return render(request, template_name="nearby/location.html", context={'json': json_string})
         # print(user)

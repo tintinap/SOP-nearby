@@ -8,7 +8,6 @@
 <body>
     <div class="container">
         <p>Your ip is: {{ ip }}</p>
-        <p>Automatic get your coordinates.</p>
         <p id="demo">Wait for location...</p>
         <form id="location_form" name="location_form" action="{% url 'location' %}" method="post">
             {% csrf_token %}
@@ -16,15 +15,15 @@
             <input type="hidden" id="long" name="long" value="">
             <input type="submit" id="subBut" style="display: none;">
         </form>
-        <p id="results"></p>
-        <pre id="json"></pre>
     </div>
+    {{ json }}
+    <pre id="json"></pre>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script id="json-data" type="application/json">{"foo": "bar"}</script>
     <script>
         var latlng = document.getElementById("demo");
 
-        document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
+        // document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
 
         var positionOptions = {
             timeout: Infinity,
