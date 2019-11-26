@@ -22,9 +22,8 @@
     <script id="json-data" type="application/json">{"foo": "bar"}</script>
     <script>
         var latlng = document.getElementById("demo");
-        var tag = {{ json|json_script: "json-data" }};
-        var tags = JSON.parse(document.getElementById('tags-data').textContent);
-        // document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
+
+        document.getElementById("json").innerHTML = JSON.stringify({{ json | safe }}, undefined, 4);
 
         var positionOptions = {
             timeout: Infinity,
