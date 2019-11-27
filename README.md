@@ -3,14 +3,15 @@ Project นี้เป็นส่วนหนึ่งของรายวิ
 Faculty of Information Technology, KMITL
 
 ## About Service :page_facing_up:
-    จะเป็น service ที่เก็บข้อมูลของผู้ใช้ ว่ามีพฤติกรรมชอบไปในสถานที่ใด
-    แล้วจะแนะนำสถานที่ที่ผู้ใช้อาจจะสนใจเดินทางไป
+    เป็น service ที่เก็บข้อมูลของผู้ใช้ ว่ามีพฤติกรรมชอบเดินทางไปในสถานที่ใด
+    จากนั้นจะแนะนำสถานที่ที่ผู้ใช้อาจจะสนใจเดินทางไปยังสถานที่นั้น
   
 ## Service Architecture :hammer:
-   ![architecture2](img_readme/architecture2.jpg)
+   ![architecture](img_readme/architecture.png)
+   
    
 ## API :pencil:
-    {
+    TBC........    {
     "ip_address" : "String",
     "might_go_places" : [
         {
@@ -45,13 +46,13 @@ Faculty of Information Technology, KMITL
     "status" : "String"
     }
 ## Database in Service :file_folder:
-   ![db2](img_readme/db2.png)
+   ![nearby_db](img_readme/nearby_db.png)
 ### Schema
-   User(**user_id**, ip)<br>
-   Place(**tag_id**, place_name, latitude, longitude)<br>
-   Tag(**tag_id**, tag_name)<br>
-   Place_User(**place_id**, **user_id**, avg_spending_time, visit_count)<br>
-   Place_Tag(**place_id**, **tag_id**)
+   User(**user_id**, ip)
+   Place(**idPlace**, place_name, latitude, longitude)
+   Tag(**idTag**, tag_name)
+   Place_User(**Place_idPlace**, **User_idUser**, avg_spending_time, visit_count, ranking)
+   Tag_Place(**Place_idPlace**, **Tag_idTag**)
     
 ## Team Members :busts_in_silhouette:
 
@@ -61,4 +62,4 @@ Name | StudentID | Github Username | Position
 นายนนท์ นิลขำ | 60070036 | @naive555 | Developer
 นางสาวพัณณิตา เหมโก | 60070061 | @Pannita2212 | Business
 นายภูมิ เนตราคม | 60070074 | @xzsawq47 | Developer
-นางสาวสุธาทิพย์ ศรีโกษะบาล | 60070104 | @yves99 | Business
+นางสาวสุธาทิพย์ ศรีโกศะบาล | 60070104 | @yves99 | Business
