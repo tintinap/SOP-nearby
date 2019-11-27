@@ -345,19 +345,24 @@ def index(request,  lati, long, type=None):
             a.append(Place.objects.get(idplace=i).longitude)
             print(a)
             all_place.append(a)
-            print(all_place)
+            # print(all_place)
                 # all_place.append(Place.objects.get(idplace=i).place_name)
 
     for i in places:
         a = []
         a.append(i['geometry']['location']['lat'])
         a.append(i['geometry']['location']['lng'])
-        print(a)
+        # print(a)
         if a in all_place:  # If not working use all_place.id !!
-            a = Place.objects.filter(place_name=i['name']).values()
-            b = PlaceUser.objects.filter(place_idplace=a.id_place,user_iduser=uid).values()
-            d = a[0]
-            d.update(b[0])
+            c = Place.objects.filter(place_name=i['name']).values()
+            # print(c[0])
+            b = PlaceUser.objects.filter(place_idplace=c[0]['idplace'],user_iduser=uid).values()[0]
+            # print(b)
+            # print(type(b))
+            d = i
+            # print(d)
+            # print(type(d))
+            d.update(b)
             place_saved.append(d)
         else:
             place_unsaved.append(i)
