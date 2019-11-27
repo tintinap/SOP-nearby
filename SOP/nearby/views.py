@@ -116,7 +116,7 @@ def updateJSON():
         place_api = place_nearby.places_nearby(lati, long, place_type, api_key)
         # user = Places(lati,long, place_api, get_user_location.lo)
 
-        user.rank_place()
+        # user.rank_place()
     
     if count_time_to_get_api == -1:
         count_time_to_get_api += 1
@@ -124,7 +124,7 @@ def updateJSON():
         print("first start")
         place_api = place_nearby.places_nearby(lati, long, place_type, api_key)
         user = Places(lati,long, place_api, get_user_location.lo)
-        user.rank_place()
+        # user.rank_place()
 
     print(user.ip_id)
 
@@ -137,7 +137,7 @@ def updateJSON():
         # user.user_lon = get_user_location.user_lon
         print("get new api at 1 min")
         user.places = place_nearby.places_nearby(user.user_lat, user.user_lon, place_type, api_key)
-        user.rank_place()
+        # user.rank_place()
 
     else:
         print("count time api ++")
@@ -163,11 +163,11 @@ def updateJSON():
         current_place = user.find_nearest_place()
         count_time += 1
         count_time_to_get_api = 0
-        context = {
-            'place': user.place_api
-        }
-        print('hi')
-        json_string = json.dumps(context)
+        # context = {
+        #     'place': user.place_api
+        # }
+        # print('hi')
+        # json_string = json.dumps(context)
         # return json_string #return 1
 
     elif count_time >= 90:  # more than 15 mins #get data from db current place
@@ -228,13 +228,13 @@ def updateJSON():
         count_time = 0
 
     current_place = user.find_nearest_place()
-    context = {
-        # 'place': user.place_api
-        'place': user.place_api
-    }
-    print('hi2')
-    print(user.place_api)
-    json_string = json.dumps(context)
+    # context = {
+    #     # 'place': user.place_api
+    #     'place': user.place_api
+    # }
+    # print('hi2')
+    # print(user.place_api)
+    # json_string = json.dumps(context)
 #     # return json_string #return 2
 
 def compute_rank_point(visited_count, count_time_avg):
