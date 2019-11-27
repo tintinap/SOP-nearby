@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Your Location</title>
+</head>
+<body>
+    <script>
+        var lat = 0.0;
+        var lng = 0.0;
+
+        var error = document.createElement("p");
+        error.id = "errorMessage";
+
+        $("body").append(error);
+
+        var positionOptions = {
+            timeout: Infinity,
+            maximumAge: 0,
+            enableHighAccuracy: true
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(showPosition, showError, positionOptions);
+            } else {
+                error.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            lat = position.coords.latitude.toString();
+            lng = position.coords.longitude.toString();
+        }
+
+        function showError(e) {
+            switch (e.code) {
+                case error.PERMISSION_DENIED:
+                    error.innerHTML = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    error.innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    error.innerHTML = "The request to get user location timed out.";
+                    break;
+                default:
+                    error.innerHTML = "An unknown error occurred.";
+            }
+        }
+
+        function autoSubmit() {
+            const http = new XMLHttpRequest();
+            const url = 'http://localhost:8000/update/' + lat + ',' + lng;
+            http.open("GET", url, true);
+            http.send();
+        }
+
+        getLocation();
+        setInterval(autoSubmit, 10000);
+    </script>
+</body>
+</html>

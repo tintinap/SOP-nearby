@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search From Place Type</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Nearby</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="form-inline my-2 my-lg-0" action="{% url 'location' %}" id="type_form" name="type_form" method="post">
+            {% csrf_token %}
+          <input class="form-control mr-sm-2" name="place_type" id=place_type type="search" placeholder="Tag Search" aria-label="Tag Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+        $('#type_form').submit(function() {
+            console.log($(this).serializeArray());
+            var CSRFtoken = $("input[name=csrfmiddlewaretoken]").val();
+            var place_type = document.getElementById("place_type").value;
+            $.post($(this).attr('action'), {
+                place_type: place_type,
+                csrfmiddlewaretoken: CSRFtoken
+            });
+         });
+    </script>
+</body>
+</html>
