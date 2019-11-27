@@ -76,7 +76,14 @@ def updateJSON():
     global lng
     global index1
     get_user_location()
-    user_info = User.objects.filter(ip=get_user_location.lo).values()
+    try:
+        print("get ip")
+        user_info = User.objects.filter(ip=get_user_location.lo).values()
+    except:
+        print("create user")
+        User.objects.create(ip=get_user_location.lo)  # save to db
+        user_info = User.objects.filter(ip=get_user_location.lo).values()
+    # user_info = User.objects.filter(ip=get_user_location.lo).values()
     lati = user_info[0]['lat']
     long = user_info[0]['lng']
     # print(User.objects.filter(ip=get_user_location.lo).values())
