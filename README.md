@@ -46,12 +46,12 @@ Faculty of Information Technology, KMITL
     "status" : "String"
     }
 ## Database in Service :file_folder:
-   ![nearby_db](img_readme/nearby_db.png)
+   ![new_db](img_readme/new_db.png)
 ### Schema
-   User(**user_id**, ip)
-   Place(**idPlace**, place_name, latitude, longitude)
-   Tag(**idTag**, tag_name)
-   Place_User(**Place_idPlace**, **User_idUser**, avg_spending_time, visit_count, ranking)
+   User(**idUser**, ip, lat, lng, type)<br />
+   Place(**idPlace**, place_name, latitude, longitude, image)<br />
+   Tag(**idTag**, tag_name)<br />
+   Place_User(**placeuser_id**, Place_idPlace, User_idUser, avg_spending_time, visit_count, ranking)<br />
    Tag_Place(**Place_idPlace**, **Tag_idTag**)
     
 ## Team Members :busts_in_silhouette:
