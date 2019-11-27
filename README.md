@@ -10,40 +10,116 @@ Faculty of Information Technology, KMITL
    ![architecture](img_readme/architecture.png)
    
    
-## API :pencil:
-    TBC........    {
-    "ip_address" : "String",
-    "might_go_places" : [
+## API SAMPLE :pencil:
+    [
         {
-            "place" : {
-                "place_name" : "String",
-                "location" : {
-                    "lat":"Double",
-                    "long":"Double",
-                 },
-                "visit_count" : "int",
-                "place_tag" : [],
-                "avg_spending_time" : "Double",
-            }
+            "name": "place_name1",
+            "geometry": {
+                "location": {
+                    "lat": 0.000000,
+                    "lng": 0.000000
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 0.000001,
+                        "lng": 0.0000001
+                    },
+                    "southwest": {
+                        "lat": 0.00000002,
+                        "lng": 0.00000002
+                    }
+                }
+            },
+            "types": [
+                "atm",
+                "finance",
+            ],
+            "placeuser_id": 10,
+            "place_idplace_id": 11,
+            "user_iduser_id": 13,
+            "avg_spending_time": 8.19,
+            "visit_count": 10,
+            "ranking": 9.638
         },
         {
-            "place" : {
-                "place_name" : "String",
-                "location" : {
-                    "lat":"Double",
-                    "long":"Double",
-              
-              },
-                "visit_count" : "int",
-                "place_tag" : [],
-                "avg_spending_time" : "Double",
-            }
+            "name": "place_name2",
+            "geometry": {
+                "location": {
+                    "lat": 0.000000,
+                    "lng": 0.000000
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 0.000001,
+                        "lng": 0.0000001
+                    },
+                    "southwest": {
+                        "lat": 0.00000002,
+                        "lng": 0.00000002
+                    }
+                }
+            },
+            "types": [
+                "atm"
+            ],
+            "placeuser_id": 6,
+            "place_idplace_id": 7,
+            "user_iduser_id": 13,
+            "avg_spending_time": 4.587,
+            "visit_count": 7,
+            "ranking": 9.5478
         },
-        .
-        .
-        .
-    ],
-    "status" : "String"
+            .
+            .
+            .
+        {
+            "name": "place_name3",
+            "geometry": {
+                "location": {
+                    "lat": 0.000000,
+                    "lng": 0.000000
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 0.000001,
+                        "lng": 0.0000001
+                    },
+                    "southwest": {
+                        "lat": 0.00000002,
+                        "lng": 0.00000002
+                    }
+                }
+            },
+            "types": [
+                "atm"
+            ],
+        },
+        {
+            "name": "place_name4",
+            "geometry": {
+                "location": {
+                    "lat": 0.000000,
+                    "lng": 0.000000
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 0.000001,
+                        "lng": 0.0000001
+                    },
+                    "southwest": {
+                        "lat": 0.00000002,
+                        "lng": 0.00000002
+                    }
+                }
+            },
+            "types": [
+                "atm"
+            ],
+        },
+            .
+            .
+            .
+        ],
     }
 ## Database in Service :file_folder:
    ![new_db](img_readme/new_db.png)
