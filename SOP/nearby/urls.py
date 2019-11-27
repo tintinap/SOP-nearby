@@ -6,5 +6,5 @@ urlpatterns = [
     path('location/', views.index, name='location'),
     # path('location/', views.get_user_location, name='location'),
     path('search/', views.search, name='search'),
-    path('update/', views.update_lat_lng, name='update')
+    path('update/<str:lati>,<str:long>', views.update_lat_lng, name='update')
 ]

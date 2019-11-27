@@ -5,45 +5,14 @@
     <title>Get Your Location</title>
 </head>
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        var form = document.createElement("form");
-        form.id = "location_form";
-        form.setAttribute('method', "get");
-        form.setAttribute('action', "#");
-
-        var lat = document.createElement("input");
-        lat.type = "hidden";
-        lat.name = "lat";
-        lat.id = "lat";
-
-        var lng = document.createElement("input");
-        lng.type = "hidden";
-        lng.name = "lng";
-        lng.id = "lng";
-
-        var subBut = document.createElement("input");
-        subBut.type = "submit";
-        subBut.name = "subBut";
-        subBut.id = "subBut";
-
-        var style = document.createElement('style');
-          style.innerHTML = `
-          #subBut {
-          display: none;
-          }
-          `;
-        document.head.appendChild(style);
+        var lat = 0.0;
+        var lng = 0.0;
 
         var error = document.createElement("p");
         error.id = "errorMessage";
 
-
-        form.append(lat);
-        form.append(lng);
-        form.append(subBut);
-
-        $("body").append(form, error);
+        $("body").append(error);
 
         var positionOptions = {
             timeout: Infinity,
@@ -60,8 +29,8 @@
         }
 
         function showPosition(position) {
-            lat.value = position.coords.latitude.toString();
-            lng.value = position.coords.longitude.toString();
+            lat = position.coords.latitude.toString();
+            lng = position.coords.longitude.toString();
         }
 
         function showError(e) {
@@ -81,17 +50,11 @@
         }
 
         function autoSubmit() {
-            $("#subBut").click();
+            const http = new XMLHttpRequest();
+            const url = 'http://localhost:8000/update/' + lat + ',' + lng;
+            http.open("GET", url, true);
+            http.send();
         }
-
-        $('#location_form').submit(function(e) {
-            e.preventDefault();
-            console.log('sent');
-            $.get($(this).attr('action'), {
-                lat: lat.value,
-                lng: lng.value
-            });
-         });
 
         getLocation();
         setInterval(autoSubmit, 10000);

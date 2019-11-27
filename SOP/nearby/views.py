@@ -10,6 +10,7 @@ import time
 import json
 from background_task import background
 # from multiprocessing import Process
+from operator import itemgetter
 import socket
 
 count_time = 0
@@ -26,7 +27,7 @@ lat = 0.0
 lng = 0.0
 index1 = 0
 
-def update_lat_lng(request): #it should contain lat lng from request from frontend
+def update_lat_lng(request, lati, long): #it should contain lat lng from request from frontend
     """
     Only update global variable of lat , lng and place_type
     """
@@ -38,12 +39,12 @@ def update_lat_lng(request): #it should contain lat lng from request from fronte
     # lat = request.GET.get('lat')
     # lng = request.GET.get('lng')
 
-    if request.GET.get('lat') is None or request.GET.get('lng') is None or request.GET.get('lat') == "" or request.GET.get('lng') == "":
+    if lati is None or long is None or lati == "" or long == "":
         pass
     else:
-        lat = float(request.GET.get('lat'))
+        lat = float(lati)
         print(lat)
-        lng = float(request.GET.get('lng'))
+        lng = float(long)
         print(lng)
     
 
@@ -311,11 +312,51 @@ def index(request,  lati, long, type=None):
     except:
         print("create user")
         User.objects.create(ip=get_user_location.lo,lat=lat,lng=lng,type=previus_place_type)  # save to db
-        # db = User.objects.get(ip=user.ip_id)
+        db = User.objects.get(ip=get_user_location.lo)
         # uid = db.iduser
 
 
     updateJSON(repeat=5)
+
+    places = place_nearby.places_nearby(db.lat, db.lng, db.type, api_key)
+
+    place_saved = []
+    place_unsaved = []
+
+        # user id
+    get_ip = User.objects.get(ip=get_user_location.lo)
+    uid = get_ip.iduser
+
+    all_place_id = []
+    all_place = []
+    all_user = PlaceUser.objects.all().filter(user_iduser=uid)
+    for i in all_user:
+        all_place_id.append(i.place_idplace.idplace)
+        for i in all_place_id:
+            a = []
+            a.append(Place.objects.get(idplace=i).latitude)
+            a.append(Place.objects.get(idplace=i).longitude)
+            print(a)
+            all_place.append(a)
+            print(all_place)
+                # all_place.append(Place.objects.get(idplace=i).place_name)
+
+    for i in places:
+        a = []
+        a.append(i['geometry']['location']['lat'])
+        a.append(i['geometry']['location']['lng'])
+        print(a)
+        if a in all_place:  # If not working use all_place.id !!
+            a = Place.objects.filter(place_name=i['name']).values()
+            b = PlaceUser.objects.filter(place_idplace=a.id_place,user_iduser=uid).values()
+            d = a[0]
+            d.update(b[0])
+            place_saved.append(d)
+        else:
+            place_unsaved.append(i)
+    pss = sorted(place_saved, key=itemgetter('ranking'),reverse=True) 
+    puss = sorted(place_unsaved, key=itemgetter('name')) 
+    json_string = pss + puss
         
     return JsonResponse(json_string, safe=False)
 
