@@ -43,3 +43,4 @@ virtualenv==16.7.7
 wheel==0.33.6
 wrapt==1.11.1
 django-background-tasks==1.2.0
+django-cors-headers==3.2.0
