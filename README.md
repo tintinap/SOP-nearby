@@ -11,7 +11,7 @@ Faculty of Information Technology, KMITL
     นี้ได้คำนวณไว้ด้วย
   
 ## Service Architecture :hammer:
-   ![architecture](img_readme/architecture.png)
+   ![architecture1](img_readme/architecture1.png)
    
 ## How to use :mag:
     สามารถเข้าถึงผ่าน Link
