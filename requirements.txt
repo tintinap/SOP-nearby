@@ -5,7 +5,7 @@ chardet==3.0.4
 Click==7.0
 colorama==0.4.1
 decorator==4.4.1
-Django==2.2.7
+Django==2.2.20
 django-globals==0.3.2
 dnspython==1.16.0
 eureka-client==0.6.2
