@@ -32,7 +32,7 @@ pytz==2019.1
 ratelim==0.1.6
 requests==2.22.0
 selenium==3.141.0
-setuptools==40.8.0
+setuptools==65.5.1
 six==1.12.0
 source==1.2.0
 sqlparse==0.3.0
